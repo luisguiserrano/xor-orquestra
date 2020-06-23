@@ -21,9 +21,6 @@ spec:
         value: python3 main.py
 
       artifacts:
-      - name: data
-        path: /app/data.json
-
       - name: main-script
         path: /app/main.py
         raw:
