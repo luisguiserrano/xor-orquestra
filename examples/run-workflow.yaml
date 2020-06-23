@@ -15,7 +15,7 @@ resources:
     branch: "master"
     
 metadata:
-  generateName: xor-orquestra-
+  generateName: xor-orq-
 
 spec:
 
@@ -24,14 +24,15 @@ spec:
   arguments:
     parameters:
     - s3-bucket: quantum-engine
-    - s3-key: qml/xor/
+    - s3-key: qml/gans/
 
   templates:
   - name: xor-workflow
     steps:
 
-    - - name: build-and-train-model
-        template: build-and-train-model
+    - - name: train-xor-model
+        template: train-model
+        # Can the above two be the same name?
         arguments:
           parameters:
 
@@ -39,9 +40,10 @@ spec:
           - epochs: "5000"
           - lr: "0.01"
 
-          - resources: [xor-orquestra]
+          - resources: [xor-orquestra, z-quantum-core]
           - docker-image: z-ml
           - docker-tag: latest
-          artifacts:
-          - name: data
-            from: '{{steps.generate-data.outputs.artifacts.data}}'
+          # Why do I need the data coming in as an artifact, if I'm generating it inside?
+          #artifacts:
+          #- name: data
+          #  from: '{{steps.generate-data.outputs.artifacts.data}}'

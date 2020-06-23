@@ -32,8 +32,8 @@ spec:
             from xor.functions import build_and_train_model 
             
             parameters = {
-              'hidden_layer': {{inputs.hidden_layer}},
-              'epochs': {{inputs.epochs}},
+              'hidden_layer': {{inputs.parameters.hidden_layer}},
+              'epochs': {{inputs.parameters.epochs}},
               'lr': {{inputs.parameters.lr}},
             }
             result = build_and_train_model(hidden_layer, epochs, lr)
