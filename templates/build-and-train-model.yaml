@@ -1,0 +1,40 @@
+spec:
+
+  templates:
+
+  - name: train-model
+    parent: generic-task
+
+    inputs:
+
+      parameters:
+      - name: hidden_layer
+      - name: epochs
+      - name: lr
+
+      - name: command
+        value: python3 main.py
+
+      artifacts:
+      - name: data
+        path: /app/data.json
+
+      - name: main-script
+        path: /app/main.py
+        raw:
+          data: |
+            from xor.functions import save_json 
+            from xor.functions import build_and_train_model 
+            
+            parameters = {
+              'hidden_layer': {{inputs.hidden_layer}},
+              'epochs': {{inputs.epochs}},
+              'lr': {{inputs.parameters.lr}},
+            }
+            result = build_and_train_model(hidden_layer, epochs, lr)
+            save_json(result, 'result.json')
+  
+    outputs:
+      artifacts:
+      - name: result
+        path: /app/result.json
