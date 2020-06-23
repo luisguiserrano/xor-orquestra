@@ -48,13 +48,16 @@ def build_and_train_model(hidden_layer = 8, epochs = 5000, lr = 0.01):
         if e % (epochs/10) == 0:
             print(f"Epoch: {e}, Training loss: {running_loss}")
             running_losses.append(running_loss)
-
     return model
 
-def predict(model, features):
+def predict(model):
+    features, _ = build_dataset()
     sigmoid = nn.Sigmoid()
+    predictions = []
     for f in features:
-        print(sigmoid(model(f)))
+        predictions.append(sigmoid(model(f)).detach().numpy())
+    return predictions
+
     
 def read_json(filename) -> dict:
     """

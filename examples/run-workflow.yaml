@@ -3,11 +3,6 @@ ZapOSApiVersion: v1alpha1
 kind: Workflow
 
 resources:
-- name: z-quantum-core
-  type: git
-  parameters:
-    url: "git@github.com:zapatacomputing/z-quantum-core.git"
-    branch: "dev"
 - name: xor-orquestra
   type: git
   parameters:
@@ -24,7 +19,7 @@ spec:
   arguments:
     parameters:
     - s3-bucket: quantum-engine
-    - s3-key: qml/gans/
+    - s3-key: qml/xor/
 
   templates:
   - name: xor-workflow
@@ -32,7 +27,6 @@ spec:
 
     - - name: train-xor-model
         template: train-model
-        # Can the above two be the same name?
         arguments:
           parameters:
 
@@ -40,10 +34,6 @@ spec:
           - epochs: "5000"
           - lr: "0.01"
 
-          - resources: [xor-orquestra, z-quantum-core]
+          - resources: [xor-orquestra]
           - docker-image: z-ml
           - docker-tag: latest
-          # Why do I need the data coming in as an artifact, if I'm generating it inside?
-          #artifacts:
-          #- name: data
-          #  from: '{{steps.generate-data.outputs.artifacts.data}}'

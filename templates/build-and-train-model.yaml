@@ -27,13 +27,15 @@ spec:
           data: |
             from xor.functions import save_json 
             from xor.functions import build_and_train_model 
+            from xor.functions import predict 
             
             parameters = {
               'hidden_layer': {{inputs.parameters.hidden_layer}},
               'epochs': {{inputs.parameters.epochs}},
               'lr': {{inputs.parameters.lr}},
             }
-            result = build_and_train_model(hidden_layer, epochs, lr)
+            model = build_and_train_model(hidden_layer, epochs, lr)
+            result = predict(model)
             save_json(result, 'result.json')
   
     outputs:
