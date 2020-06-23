@@ -8,6 +8,11 @@ spec:
     inputs:
 
       parameters:
+      - name: docker-image
+        value: z-ml
+      - name: docker-tag
+        value: latest
+
       - name: hidden_layer
       - name: epochs
       - name: lr
