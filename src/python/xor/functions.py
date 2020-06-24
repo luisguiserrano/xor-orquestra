@@ -17,24 +17,24 @@ def build_dataset():
     return features, labels
 
 # Build and train the model
-def build_and_train_model(hidden_layer = 8, epochs = 5000, lr = 0.01):
+def build_and_train_model(hidden_layer = '8', epochs = '5000', lr = '0.01'):
     
     # Join the features and labels
     features, labels = build_dataset()
     data = [d for d in zip(features, labels)]
 
     #Build the model
-    model = nn.Sequential(nn.Linear(2, hidden_layer),
+    model = nn.Sequential(nn.Linear(2, int(hidden_layer)),
                           nn.ReLU(),
-                          nn.Linear(hidden_layer, 1))
+                          nn.Linear(int(hidden_layer), 1))
 
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = optim.SGD(model.parameters(), lr = lr)
+    optimizer = optim.SGD(model.parameters(), lr = np.float32(lr))
 
     running_losses = []
 
     # Train the model
-    for e in range(epochs):
+    for e in range(int(epochs)):
         running_loss = 0
         for data_point in data:
             feature = data_point[0]
@@ -45,7 +45,7 @@ def build_and_train_model(hidden_layer = 8, epochs = 5000, lr = 0.01):
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
-        if e % (epochs/10) == 0:
+        if e % (int(epochs)/10) == 0:
             #print(f"Epoch: {e}, Training loss: {running_loss}")
             running_losses.append(running_loss)
     return model
@@ -92,3 +92,7 @@ def save_json(result, filename) -> None:
 
     except IOError:
         print(f'Error: Could not open {filename}')
+
+# model = build_and_train_model()
+# predictions = predict(model)
+# print(predictions)
