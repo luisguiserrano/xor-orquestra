@@ -36,7 +36,7 @@ spec:
             }
             model = build_and_train_model(hidden_layer, epochs, lr)
             predictions = predict(model)
-            save_json([predictions], 'predictions.json')
+            save_json([predictions], ['predictions.json'])
   
     outputs:
       artifacts:
