@@ -31,7 +31,7 @@ spec:
           parameters:
 
           - hidden_layer: "8"
-          - epochs: "5000"
+          - epochs: "500"
           - lr: "0.01"
 
           - resources: [xor-orquestra]
