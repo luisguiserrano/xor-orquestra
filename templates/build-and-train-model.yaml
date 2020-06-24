@@ -34,9 +34,9 @@ spec:
               'epochs': {{inputs.parameters.epochs}},
               'lr': {{inputs.parameters.lr}},
             }
-            hidden_layer = {{inputs.parameters.hidden_layer}}
-            epochs = {{inputs.parameters.epochs}}
-            lr = {{inputs.parameters.lr}}
+            hidden_layer = parameters.[hidden_layer]
+            epochs = parameters[epochs]
+            lr = parameters[lr]
             model = build_and_train_model(hidden_layer, epochs, lr)
             result = predict(model)
             save_json(result, 'result.json')
