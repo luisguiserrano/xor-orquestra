@@ -92,11 +92,3 @@ def save_json(result, filename) -> None:
 
     except IOError:
         print(f'Error: Could not open {filename}')
-
-print("Datset:")
-dataset = build_dataset()
-print("\nTraining:")
-model = build_and_train_model()
-features = dataset[0]
-predictions = predict(model)
-print("\nPredictions:", predictions)
