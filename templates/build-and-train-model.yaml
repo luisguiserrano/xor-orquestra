@@ -29,7 +29,10 @@ spec:
             from xor.functions import build_and_train_model 
             from xor.functions import predict 
 
-            model = build_and_train_model({{inputs.parameters.hidden_layer}}, {{inputs.parameters.epochs}}, {{inputs.parameters.lr}})
+            lr = {{inputs.parameters.lr}}
+            epochs = {{inputs.parameters.epochs}}
+            hidden_layer = {{inputs.parameters.hidden_layer}}
+            model = build_and_train_model(hidden_layer, epochs, lr)
             result = predict(model)
             save_json(result, 'result.json')
   
