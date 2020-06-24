@@ -35,10 +35,10 @@ spec:
               'lr': {{inputs.parameters.lr}},
             }
             model = build_and_train_model(hidden_layer, epochs, lr)
-            result = predict(model)
-            save_json(result, 'result.json')
+            predictions = predict(model)
+            save_json(predictions, 'predictions.json')
   
     outputs:
       artifacts:
-      - name: result
-        path: /app/result.json
+      - name: predictions
+        path: /app/predictions.json

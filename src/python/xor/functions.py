@@ -25,8 +25,8 @@ def build_and_train_model(hidden_layer = 8, epochs = 5000, lr = 0.01):
 
     #Build the model
     model = nn.Sequential(nn.Linear(2, hidden_layer),
-                        nn.ReLU(),
-                        nn.Linear(hidden_layer, 1))
+                          nn.ReLU(),
+                          nn.Linear(hidden_layer, 1))
 
     criterion = nn.BCEWithLogitsLoss()
     optimizer = optim.SGD(model.parameters(), lr = lr)
@@ -93,12 +93,10 @@ def save_json(result, filename) -> None:
     except IOError:
         print(f'Error: Could not open {filename}')
 
-
-
 print("Datset:")
 dataset = build_dataset()
 print("\nTraining:")
 model = build_and_train_model()
 features = dataset[0]
-print("\nPredictions:")
-predict(model, features)
+predictions = predict(model)
+print("\nPredictions:", predictions)
