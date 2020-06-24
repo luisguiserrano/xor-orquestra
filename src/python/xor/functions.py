@@ -46,7 +46,7 @@ def build_and_train_model(hidden_layer = 8, epochs = 5000, lr = 0.01):
             optimizer.step()
             running_loss += loss.item()
         if e % (epochs/10) == 0:
-            print(f"Epoch: {e}, Training loss: {running_loss}")
+            #print(f"Epoch: {e}, Training loss: {running_loss}")
             running_losses.append(running_loss)
     return model
 
