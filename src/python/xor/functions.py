@@ -56,7 +56,8 @@ def predict(model):
     predictions = []
     for f in features:
         predictions.append(sigmoid(model(f)).detach().numpy())
-    return predictions
+    predictions = np.array(predictions)
+    return json.dumps(predictions, cls=NumpyArrayEncoder)
 
     
 def read_json(filename) -> dict:
@@ -93,6 +94,17 @@ def save_json(result, filename) -> None:
     except IOError:
         print(f'Error: Could not open {filename}')
 
-# model = build_and_train_model()
-# predictions = predict(model)
-# print(predictions)
+class NumpyArrayEncoder(JSONEncoder):
+    """
+    Aux classes for decoding NumPy arrays to Python objects.
+    Returns:
+        A list or a JSONEnconder object.
+    """
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
+
+model = build_and_train_model()
+predictions = predict(model)
+print(predictions)
