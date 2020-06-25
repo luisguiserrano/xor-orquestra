@@ -25,14 +25,16 @@ spec:
         path: /app/main.py
         raw:
           data: |
-            from xor.functions import save_json 
+            from xor.utils import save_json 
+            from xor.functions import build_dataset
             from xor.functions import build_and_train_model 
             from xor.functions import predict 
 
             lr = {{inputs.parameters.lr}}
             epochs = {{inputs.parameters.epochs}}
             hidden_layer = {{inputs.parameters.hidden_layer}}
-            model = build_and_train_model(hidden_layer, epochs, lr)
+            dataset = build_dataset()
+            model = build_and_train_model(dataset, hidden_layer, epochs, lr)
             predictions = predict(model)
             result = {}
             result["predictions"] = predictions

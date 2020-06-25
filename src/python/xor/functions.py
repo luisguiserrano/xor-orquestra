@@ -3,7 +3,7 @@ import torch
 from torch import nn
 from torch import optim
 import json
-from json import JSONEncoder
+from utils import NumpyArrayEncoder
 
 # Build the dataset
 def build_dataset():
@@ -14,13 +14,13 @@ def build_dataset():
     labels = torch.from_numpy(labels)
 
     dataset = (features, labels)
-    return features, labels
+    return dataset
 
 # Build and train the model
-def build_and_train_model(hidden_layer = '8', epochs = '5000', lr = '0.01'):
+def build_and_train_model(dataset, hidden_layer = '8', epochs = '5000', lr = '0.01'):
     
     # Join the features and labels
-    features, labels = build_dataset()
+    features, labels = dataset
     data = [d for d in zip(features, labels)]
 
     #Build the model
@@ -59,52 +59,7 @@ def predict(model):
     predictions = np.array(predictions)
     return json.dumps(predictions, cls=NumpyArrayEncoder)
 
-    
-def read_json(filename) -> dict:
-    """
-    Loads data from JSON.
-    Args:
-        filename (str): the file to load the data from.
-    Returns:
-        data (dict): data that was loaded from the file.
-    """
-    data = {}
-    try:
-        with open(filename, 'r') as f:
-            data = json.load(f)
-    except IOError:
-            print(f'Error: Could not open {filename}')
-
-    return data
-
-
-def save_json(result, filename) -> None:
-    """
-    Saves data as JSON.
-    Args:
-        result (ditc): of data to save.
-        filenames (str): file name to save the data in
-            (should have a '.json' extension).
-    """
-    try:
-        with open(filename,'w') as f:
-            result["schema"] = "orquestra-v1-data"
-            f.write(json.dumps(result, indent=2)) 
-
-    except IOError:
-        print(f'Error: Could not open {filename}')
-
-class NumpyArrayEncoder(JSONEncoder):
-    """
-    Aux classes for decoding NumPy arrays to Python objects.
-    Returns:
-        A list or a JSONEnconder object.
-    """
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return JSONEncoder.default(self, obj)
-
-model = build_and_train_model()
+dataset = build_dataset()
+model = build_and_train_model(dataset)
 predictions = predict(model)
 print(predictions)
