@@ -3,7 +3,7 @@ import torch
 from torch import nn
 from torch import optim
 import json
-from utils import NumpyArrayEncoder
+from xor.utils import NumpyArrayEncoder
 
 # Build the dataset
 def build_dataset():

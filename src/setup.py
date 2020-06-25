@@ -6,7 +6,7 @@ with open(readme_path, "r") as f:
     long_description = f.read()
 
 setuptools.setup(
-    name                            = "z-xor",
+    name                            = "xor-orquestra",
     version                         = "0.1.0",
     author                          = "Zapata Computing, Inc.",
     author_email                    = "info@zapatacomputing.com",
