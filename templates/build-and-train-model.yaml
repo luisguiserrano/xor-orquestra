@@ -21,6 +21,10 @@ spec:
         value: python3 main.py
 
       artifacts:
+      - name: features
+        path: /app/features.pth
+      - name: labels
+        path: /app/labels/pth
       - name: main-script
         path: /app/main.py
         raw:
