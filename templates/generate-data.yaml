@@ -1,0 +1,36 @@
+spec:
+
+  templates:
+
+  - name: generate-data
+    parent: generic-task
+
+    inputs:
+
+      parameters:
+      - name: docker-image
+        value: z-ml
+      - name: docker-tag
+        value: latest
+
+      - name: command
+        value: python3 main.py
+
+      artifacts:
+      - name: main-script
+        path: /app/main.py
+        raw:
+          data: |
+            from xor.utils import save_torch
+            from xor.generate_data import build_dataset
+
+            features, labels = build_dataset()
+            save_torch(features, 'features.pth')
+            save_torch(labels, 'labels.pth')
+  
+    outputs:
+      artifacts:
+      - name: features
+        path: /app/features.pth
+      - name: labels
+        path: /app/labels.pth

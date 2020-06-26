@@ -19,13 +19,21 @@ spec:
   arguments:
     parameters:
     - s3-bucket: quantum-engine
-    - s3-key: qml/xor/
+    - s3-key: mine/xor/
 
   templates:
   - name: xor-workflow
     steps:
+    - - name: generate-data
+        template: generate-data
+        arguments:
+          parameters:
 
-    - - name: train-xor-model
+          - resources: [xor-orquestra]
+          - docker-image: z-ml
+          - docker-tag: latest
+
+    - - name: train-model
         template: train-model
         arguments:
           parameters:
@@ -37,3 +45,8 @@ spec:
           - resources: [xor-orquestra]
           - docker-image: z-ml
           - docker-tag: latest
+          artifacts:
+          - name: features
+            from: '{{steps.generate-model.outputs.artifacts.features}}'
+          - name: labels
+            from: '{{steps.generate-model.outputs.artifacts.labels}}'

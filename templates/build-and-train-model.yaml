@@ -33,8 +33,9 @@ spec:
             lr = {{inputs.parameters.lr}}
             epochs = {{inputs.parameters.epochs}}
             hidden_layer = {{inputs.parameters.hidden_layer}}
-            dataset = build_dataset()
-            model = build_and_train_model(dataset, hidden_layer, epochs, lr)
+            features = load_data('features.pth')
+            labels = load_data('labels.pth')
+            model = build_and_train_model(features, labels, hidden_layer, epochs, lr)
             predictions = predict(model)
             result = {}
             result["predictions"] = predictions

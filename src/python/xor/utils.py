@@ -1,6 +1,58 @@
-import numpy as np
 import json
+import torch
+import numpy as np
+from tensorflow import keras
 from json import JSONEncoder
+
+
+class NumpyArrayEncoder(JSONEncoder):
+    """
+    Aux classes for decoding NumPy arrays to Python objects.
+    Returns:
+        A list or a JSONEnconder object.
+    """
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return JSONEncoder.default(self, obj)
+
+
+def convert_torch_to_numpy(args):
+    """
+    Converts a list of Torch tensors to NumPy arrays.
+    Args:
+        args (list): list containing QNode arguments, including Torch tensors.
+    Returns:
+        list: returns list with Torch tensors converted to NumPy arrays.
+    """
+    res = []
+
+    for i in args:
+        if isinstance(i, torch.Tensor):
+            if i.is_cuda:
+                res.append(i.cpu().detach().numpy())
+            else:
+                res.append(i.detach().numpy())
+        else:
+            res.append(i)
+
+    res = [i.tolist() if (isinstance(i, np.ndarray) and not i.shape) else i for i in res]
+
+    return res
+
+
+def serialize_torch(key, torch_tensor):
+    """
+    Serialize an PyTorch binary.
+    Args:
+        key (str): a value to be the key in the final JSON result.
+        torch_tensor: a PyTorch Tensor object.
+    Returns:
+        A dictionary with the PyTorch serialized.
+    """
+    np_dict = {key: convert_torch_to_numpy(torch_tensor)}
+    return json.dumps(np_dict, cls=NumpyArrayEncoder)
+
 
 def read_json(filename) -> dict:
     """
@@ -20,29 +72,80 @@ def read_json(filename) -> dict:
     return data
 
 
-def save_json(result, filename) -> None:
+def save_json(data, filename) -> None:
     """
     Saves data as JSON.
     Args:
-        result (ditc): of data to save.
+        data (ditc): data to save.
         filenames (str): file name to save the data in
             (should have a '.json' extension).
     """
     try:
         with open(filename,'w') as f:
-            result["schema"] = "orquestra-v1-data"
-            f.write(json.dumps(result, indent=2)) 
+            data["schema"] = "orquestra-v1-data"
+            f.write(json.dumps(data, indent=2)) 
 
     except IOError:
         print(f'Error: Could not open {filename}')
 
-class NumpyArrayEncoder(JSONEncoder):
+
+def save_torch(data, filename) -> None:
     """
-    Aux classes for decoding NumPy arrays to Python objects.
+    Saves PyTorch data as .PTH.
+    Args:
+        data (torch tensor): data to save.
+        filenames (str): file name to save the data in
+            (should have a '.pth' extension).
+    """
+    try:
+        torch.save(data, filename)
+
+    except Exception as e:
+        print(f'Error: Could not open {filename}: {e}')
+
+
+def load_torch(filename):
+    """
+    Loads data from PTH.
+    Args:
+        filename (str): the file to load the data from.
     Returns:
-        A list or a JSONEnconder object.
+        data (PyTorch): data that was loaded from the file.
     """
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        return JSONEncoder.default(self, obj)
+    try:
+        return torch.load(buffer)
+    except Exception as e:
+        print(f'Error: Could not open {filename}: {e}')
+
+
+def save_model_h5(model:Sequential, filename:str) -> None:
+    """
+    Saves a complete model as an H5 file. H5 files can be used to pass models 
+    between tasks but cannot be returned in a workflowresult.
+    Args:
+      model (keras.models.Sequential):
+        The model to save.
+      filename (str):
+        The name of the file to save the model in. This should have a '.h5'
+        extension.
+    """
+    keras.models.save_model(
+        model, filename, include_optimizer=True
+    )
+
+
+def load_model_h5(filename:str) -> Sequential:
+    """
+    Loads a keras model from an H5 file. H5 files can be used to pass models 
+    between tasks but cannot be returned in a workflowresult.
+    Args:
+      filename (str):
+        The H5 file to load the model from. This should have the format created 
+        by `keras.models.save_model`.
+    Returns:
+      model (Sequential):
+        The model loaded from the file. 
+    """
+
+    model = keras.models.load_model(filename, compile=True)
+    return model

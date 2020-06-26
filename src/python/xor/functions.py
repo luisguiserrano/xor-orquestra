@@ -17,10 +17,9 @@ def build_dataset():
     return dataset
 
 # Build and train the model
-def build_and_train_model(dataset, hidden_layer = '8', epochs = '5000', lr = '0.01'):
+def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000', lr = '0.01'):
     
     # Join the features and labels
-    features, labels = dataset
     data = [d for d in zip(features, labels)]
 
     #Build the model
@@ -50,7 +49,8 @@ def build_and_train_model(dataset, hidden_layer = '8', epochs = '5000', lr = '0.
             running_losses.append(running_loss)
     return model
 
-def predict(model):
+def predict(model, dataset):
+    features = # FIGURE THIS OUT
     features, _ = build_dataset()
     sigmoid = nn.Sigmoid()
     predictions = []
