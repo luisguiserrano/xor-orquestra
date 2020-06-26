@@ -5,10 +5,9 @@ from xor.utils import save_torch
 # Build the dataset
 def build_dataset():
     features = np.array([[0,0],[0,1],[1,0],[1,1]]).astype(np.float32)
-    #features = torch.from_numpy(features)
+    features = torch.from_numpy(features)
 
     labels = np.array([0,1,1,0]).astype(np.float32).reshape(-1,1)
-    #labels = torch.from_numpy(labels)
+    labels = torch.from_numpy(labels)
 
-    dataset = np.array([d for d in zip(features, labels)])
-    return dataset
+    return features, labels
