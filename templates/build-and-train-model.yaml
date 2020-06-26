@@ -37,10 +37,14 @@ spec:
             lr = {{inputs.parameters.lr}}
             epochs = {{inputs.parameters.epochs}}
             hidden_layer = {{inputs.parameters.hidden_layer}}
-            features = load_data('features.pth')
-            labels = load_data('labels.pth')
+            
+            features = load_torch('features.pth')
+            labels = load_torch('labels.pth')
+            
             model = build_and_train_model(features, labels, hidden_layer, epochs, lr)
+            
             predictions = predict(model)
+            
             result = {}
             result["predictions"] = predictions
             save_json(result, 'result.json')

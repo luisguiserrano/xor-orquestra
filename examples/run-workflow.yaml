@@ -47,6 +47,6 @@ spec:
           - docker-tag: latest
           artifacts:
           - name: features
-            from: '{{steps.generate-model.outputs.artifacts.features}}'
+            from: '{{steps.generate-data.outputs.artifacts.features}}'
           - name: labels
-            from: '{{steps.generate-model.outputs.artifacts.labels}}'
+            from: '{{steps.generate-data.outputs.artifacts.labels}}'
