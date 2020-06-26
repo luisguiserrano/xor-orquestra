@@ -116,36 +116,3 @@ def load_torch(filename):
         return torch.load(buffer)
     except Exception as e:
         print(f'Error: Could not open {filename}: {e}')
-
-
-def save_model_h5(model:Sequential, filename:str) -> None:
-    """
-    Saves a complete model as an H5 file. H5 files can be used to pass models 
-    between tasks but cannot be returned in a workflowresult.
-    Args:
-      model (keras.models.Sequential):
-        The model to save.
-      filename (str):
-        The name of the file to save the model in. This should have a '.h5'
-        extension.
-    """
-    keras.models.save_model(
-        model, filename, include_optimizer=True
-    )
-
-
-def load_model_h5(filename:str) -> Sequential:
-    """
-    Loads a keras model from an H5 file. H5 files can be used to pass models 
-    between tasks but cannot be returned in a workflowresult.
-    Args:
-      filename (str):
-        The H5 file to load the model from. This should have the format created 
-        by `keras.models.save_model`.
-    Returns:
-      model (Sequential):
-        The model loaded from the file. 
-    """
-
-    model = keras.models.load_model(filename, compile=True)
-    return model
