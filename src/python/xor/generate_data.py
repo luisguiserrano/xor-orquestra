@@ -14,7 +14,7 @@ def build_dataset():
     serialized_labels = serialize_torch("torch_labels", labels)
     
     result = {}
-    result["features", [serialized_features]]
-    result["labels", [serialized_labels]]
+    result["features", serialized_features]
+    result["labels", serialized_labels]
 
     return result
