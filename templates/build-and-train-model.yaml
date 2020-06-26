@@ -21,25 +21,24 @@ spec:
         value: python3 main.py
 
       artifacts:
-      - name: features
-        path: /app/features.pth
-      - name: labels
-        path: /app/labels/pth
+      - name: data
+        path: /app/data.json
       - name: main-script
         path: /app/main.py
         raw:
           data: |
             from xor.utils import save_json 
-            from xor.functions import build_dataset
             from xor.functions import build_and_train_model 
-            from xor.functions import predict 
+            from xor.functions import predict
+            import json
 
             lr = {{inputs.parameters.lr}}
             epochs = {{inputs.parameters.epochs}}
             hidden_layer = {{inputs.parameters.hidden_layer}}
             
-            features = load_torch('features.pth')
-            labels = load_torch('labels.pth')
+            data = json.loads({{inputs.artifacts.data}})
+            features = data["features"]
+            labels = data["labels"]
             
             model = build_and_train_model(features, labels, hidden_layer, epochs, lr)
             

@@ -46,7 +46,5 @@ spec:
           - docker-image: z-ml
           - docker-tag: latest
           artifacts:
-          - name: features
-            from: '{{steps.generate-data.outputs.artifacts.features}}'
-          - name: labels
-            from: '{{steps.generate-data.outputs.artifacts.labels}}'
+          - name: data
+            from: '{{steps.generate-data.outputs.artifacts.data}}'
