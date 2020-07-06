@@ -28,7 +28,8 @@ spec:
         raw:
           data: |
             from xor.utils import save_json 
-            from xor.functions import build_and_train_model 
+            from xor.utils import read_json
+            from xor.functions import build_and_train_model
             from xor.functions import predict
             import json
 
@@ -36,7 +37,7 @@ spec:
             epochs = {{inputs.parameters.epochs}}
             hidden_layer = {{inputs.parameters.hidden_layer}}
             
-            data = json.loads({{inputs.artifacts.data}})
+            data = read_json('data.json')
             features = data["features"]
             labels = data["labels"]
             
