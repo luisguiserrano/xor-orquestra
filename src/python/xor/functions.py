@@ -4,9 +4,16 @@ from torch import nn
 from torch import optim
 import json
 from xor.utils import NumpyArrayEncoder
+import logging
 
 # Build the dataset
 def build_dataset():
+    logging.debug('This is a debug message')
+    logging.info('This is an info message')
+    logging.warning('This is a warning message')
+    logging.error('This is an error message')
+    logging.critical('This is a critical message')
+
     features = np.array([[0,0],[0,1],[1,0],[1,1]]).astype(np.float32)
     features = torch.from_numpy(features)
 
