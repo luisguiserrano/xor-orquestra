@@ -56,6 +56,9 @@ def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000',
     return model
 
 def predict(model, features, labels):
+    features = torch.from_numpy(np.array(features).astype(np.float32))
+    labels = torch.from_numpy(np.array(labels).astype(np.float32).reshape(-1,1))
+
     sigmoid = nn.Sigmoid()
     predictions = []
     for f in features:
