@@ -8,11 +8,11 @@ import logging
 
 # Build the dataset
 def build_dataset():
-    logging.debug('This is a debug message')
-    logging.info('This is an info message')
-    logging.warning('This is a warning message')
-    logging.error('This is an error message')
-    logging.critical('This is a critical message')
+    logging.debug('aThis is a debug message')
+    logging.info('aThis is an info message')
+    logging.warning('aThis is a warning message')
+    logging.error('aThis is an error message')
+    logging.critical('aThis is a critical message')
 
     features = np.array([[0,0],[0,1],[1,0],[1,1]]).astype(np.float32)
     features = torch.from_numpy(features)
@@ -25,8 +25,14 @@ def build_dataset():
 
 # Build and train the model
 def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000', lr = '0.01'):
-    features = torch.from_numpy(np.array(features))
-    labels = torch.from_numpy(np.array(labels))
+    logging.debug('This is a debug message')
+    logging.info('This is an info message')
+    logging.warning('This is a warning message')
+    logging.error('This is an error message')
+    logging.critical('This is a critical message')
+
+    features = torch.from_numpy(np.array(features).astype(np.float32))
+    labels = torch.from_numpy(np.array(labels).astype(np.float32))
     
     # Join the features and labels
     data = [d for d in zip(features, labels)]
