@@ -56,8 +56,3 @@ def predict(model, features, labels):
         predictions.append(sigmoid(model(f)).detach().numpy())
     predictions = np.array(predictions)
     return json.dumps(predictions, cls=NumpyArrayEncoder)
-
-dataset = build_dataset()
-model = build_and_train_model(dataset)
-predictions = predict(model)
-print(predictions)
