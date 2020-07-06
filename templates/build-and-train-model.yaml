@@ -43,7 +43,7 @@ spec:
             
             model = build_and_train_model(features, labels, hidden_layer, epochs, lr)
             
-            predictions = predict(model)
+            predictions = predict(model, features, labels)
             
             result = {}
             result["predictions"] = predictions
