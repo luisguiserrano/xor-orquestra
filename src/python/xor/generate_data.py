@@ -5,8 +5,8 @@ import torch
 
 # Build the dataset
 def build_dataset():
-    features = np.array([[0,0],[0,1],[1,0],[1,1]]).astype(np.float32)
-    labels = np.array([0,1,1,0]).astype(np.float32).reshape(-1,1)
+    features = [[0,0],[0,1],[1,0],[1,1]]
+    labels = [0,1,1,0])
     
     result = {}
     result["features"] = features
