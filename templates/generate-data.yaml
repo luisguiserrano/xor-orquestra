@@ -23,6 +23,7 @@ spec:
           data: |
             from xor.utils import save_torch
             from xor.generate_data import build_dataset
+            import json
 
             data = build_dataset()
             save_json(data, 'data.json')
