@@ -18,6 +18,8 @@ def build_dataset():
 
 # Build and train the model
 def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000', lr = '0.01'):
+    features = torch.from_numpy(np.array(features))
+    labels = torch.from_numpy(np.array(labels))
     
     # Join the features and labels
     data = [d for d in zip(features, labels)]
