@@ -49,9 +49,7 @@ def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000',
             running_losses.append(running_loss)
     return model
 
-def predict(model, dataset):
-    features = # FIGURE THIS OUT
-    features, _ = build_dataset()
+def predict(model, features, labels):
     sigmoid = nn.Sigmoid()
     predictions = []
     for f in features:
