@@ -21,8 +21,6 @@ def build_dataset():
 # Build and train the model
 def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000', lr = '0.01'):
     logging.warning('This is a warning message')
-    logging.warning('features', features)
-    logging.warning('labels', labels)
 
     features = torch.from_numpy(np.array(features).astype(np.float32))
     labels = torch.from_numpy(np.array(labels).astype(np.float32))
