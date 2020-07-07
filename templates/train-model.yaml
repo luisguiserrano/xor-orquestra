@@ -29,8 +29,8 @@ spec:
           data: |
             from xor.utils import save_json 
             from xor.utils import read_json
-            from xor.functions import build_and_train_model
-            from xor.functions import predict
+            from xor.train_model import build_and_train_model
+            from xor.train_model import predict
             import json
 
             lr = {{inputs.parameters.lr}}

@@ -1,6 +1,5 @@
 import numpy as np
 import json
-from xor.utils import serialize_torch
 import torch
 
 # Build the dataset
