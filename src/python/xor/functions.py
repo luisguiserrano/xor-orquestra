@@ -6,21 +6,8 @@ import json
 from xor.utils import NumpyArrayEncoder
 import logging
 
-# Build the dataset
-def build_dataset():
-
-    features = np.array([[0,0],[0,1],[1,0],[1,1]]).astype(np.float32)
-    features = torch.from_numpy(features)
-
-    labels = np.array([0,1,1,0]).astype(np.float32).reshape(-1,1)
-    labels = torch.from_numpy(labels)
-
-    dataset = (features, labels)
-    return dataset
-
 # Build and train the model
 def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000', lr = '0.01'):
-    logging.warning('This is a warning message')
 
     features = torch.from_numpy(np.array(features).astype(np.float32))
     labels = torch.from_numpy(np.array(labels).astype(np.float32).reshape(-1,1))
@@ -55,6 +42,7 @@ def build_and_train_model(features, labels, hidden_layer = '8', epochs = '5000',
             running_losses.append(running_loss)
     return model
 
+# Make predictions using the model
 def predict(model, features, labels):
     features = torch.from_numpy(np.array(features).astype(np.float32))
     labels = torch.from_numpy(np.array(labels).astype(np.float32).reshape(-1,1))
